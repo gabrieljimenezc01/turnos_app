@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:5.7
+    container_name: turnos_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: turnos_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306"  # Cambiado de 3306 a 3307
+    volumes:
+      - db_data:/var/lib/mysql
+
+  web:
+    build:
+      context: .
+      dockerfile: ./php/Dockerfile
+    container_name: turnos_web
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+
+volumes:
+  db_data:
