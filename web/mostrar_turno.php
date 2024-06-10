@@ -28,11 +28,16 @@ require 'db.php';
     </script>
 </head>
 <body>
-    <h1>Turnos en Atención 3.0</h1>
+    <h1>Turnos en Atención</h1>
     <?php
     try {
         // Consulta para obtener los turnos que están siendo atendidos actualmente
-        $stmt = $conn->query("SELECT c.nombre as caja, t.numero FROM turnos t JOIN cajas c ON t.caja_id = c.id WHERE t.estado = 'atendiendo' ORDER BY t.created_at ASC");
+        $stmt = $conn->query("SELECT c.nombre as caja, t.numero, cl.nombre as cliente, cl.telefono, cl.email 
+                              FROM turnos t 
+                              JOIN cajas c ON t.caja_id = c.id 
+                              JOIN clientes cl ON t.cliente_id = cl.id 
+                              WHERE t.estado = 'atendiendo' 
+                              ORDER BY t.created_at ASC");
         $turnos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if ($turnos) {
@@ -40,11 +45,17 @@ require 'db.php';
                     <tr>
                       <th>Caja</th>
                       <th>Turno</th>
+                      <th>Nombre</th>
+                      <th>Teléfono</th>
+                      <th>Email</th>
                     </tr>";
             foreach ($turnos as $turno) {
                 echo "<tr>
                         <td>" . htmlspecialchars($turno['caja']) . "</td>
                         <td>" . htmlspecialchars($turno['numero']) . "</td>
+                        <td>" . htmlspecialchars($turno['cliente']) . "</td>
+                        <td>" . htmlspecialchars($turno['telefono']) . "</td>
+                        <td>" . htmlspecialchars($turno['email']) . "</td>
                       </tr>";
             }
             echo "</table>";
