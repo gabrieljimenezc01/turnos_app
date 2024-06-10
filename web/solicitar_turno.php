@@ -13,7 +13,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->execute([$cedula]);
         $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$cliente) {
+        if ($cliente) {
+            // Actualizar los datos del cliente existente
+            $stmt = $conn->prepare("UPDATE clientes SET nombre = ?, telefono = ? WHERE cedula = ?");
+            $stmt->execute([$nombre, $telefono, $cedula]);
+        } else {
             // Insertar los datos del cliente en la tabla de clientes
             $stmt = $conn->prepare("INSERT INTO clientes (cedula, nombre, telefono) VALUES (?, ?, ?)");
             $stmt->execute([$cedula, $nombre, $telefono]);
@@ -48,6 +52,31 @@ try {
 <head>
     <meta charset="UTF-8">
     <title>Solicitar Turno</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#cedula').on('blur', function() {
+                var cedula = $(this).val();
+                if (cedula) {
+                    $.ajax({
+                        url: 'obtener_cliente.php',
+                        type: 'POST',
+                        data: { cedula: cedula },
+                        success: function(data) {
+                            var cliente = JSON.parse(data);
+                            if (cliente) {
+                                $('#nombre').val(cliente.nombre);
+                                $('#telefono').val(cliente.telefono);
+                            } else {
+                                $('#nombre').val('');
+                                $('#telefono').val('');
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 </head>
 <body>
     <h1>Solicitar Turno</h1>
