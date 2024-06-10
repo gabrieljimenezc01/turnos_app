@@ -52,6 +52,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <title>Solicitar Turno</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {

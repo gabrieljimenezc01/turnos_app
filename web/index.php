@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Aplicación de Turnos</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
   <h1>Aplicación de Turnos</h1>

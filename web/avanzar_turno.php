@@ -19,7 +19,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $stmt = $conn->query("SELECT * FROM cajas");
   $cajas = $stmt->fetchAll();
 ?>
-  <form method="post">
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>avanzar Turnos</title>
+     <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+<form method="post">
     <label for="caja_id">Selecciona Caja:</label>
     <select name="caja_id">
       <?php foreach ($cajas as $caja): ?>
@@ -28,6 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </select>
     <button type="submit">Avanzar Turno</button>
   </form>
+</body>
+  
 <?php
 }
 ?>
