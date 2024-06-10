@@ -28,15 +28,15 @@ require 'db.php';
     </script>
 </head>
 <body>
-    <h1>Turnos en Atención</h1>
+    <h1>Turnos en Espera</h1>
     <?php
     try {
-        // Consulta para obtener los turnos que están siendo atendidos actualmente
-        $stmt = $conn->query("SELECT c.nombre as caja, t.numero, cl.nombre as cliente, cl.telefono, cl.email 
+        // Consulta para obtener los turnos que están en estado "espera"
+        $stmt = $conn->query("SELECT c.nombre as caja, t.numero, cl.nombre as cliente, cl.telefono, cl.cedula 
                               FROM turnos t 
                               JOIN cajas c ON t.caja_id = c.id 
-                              JOIN clientes cl ON t.cliente_id = cl.id 
-                              WHERE t.estado = 'atendiendo' 
+                              JOIN clientes cl ON t.cliente_cedula = cl.cedula 
+                              WHERE t.estado = 'espera' 
                               ORDER BY t.created_at ASC");
         $turnos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -47,7 +47,7 @@ require 'db.php';
                       <th>Turno</th>
                       <th>Nombre</th>
                       <th>Teléfono</th>
-                      <th>Email</th>
+                      <th>Cédula</th>
                     </tr>";
             foreach ($turnos as $turno) {
                 echo "<tr>
@@ -55,12 +55,12 @@ require 'db.php';
                         <td>" . htmlspecialchars($turno['numero']) . "</td>
                         <td>" . htmlspecialchars($turno['cliente']) . "</td>
                         <td>" . htmlspecialchars($turno['telefono']) . "</td>
-                        <td>" . htmlspecialchars($turno['email']) . "</td>
+                        <td>" . htmlspecialchars($turno['cedula']) . "</td>
                       </tr>";
             }
             echo "</table>";
         } else {
-            echo "<p>No hay turnos en atención.</p>";
+            echo "<p>No hay turnos en espera.</p>";
         }
     } catch (PDOException $e) {
         echo "<p>Error: " . $e->getMessage() . "</p>";
