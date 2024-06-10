@@ -16,14 +16,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->execute([$nombre, $telefono, $email]);
         $cliente_id = $conn->lastInsertId();
 
+        // Obtén el número de turno para la caja específica
+        $stmt = $conn->prepare("SELECT IFNULL(MAX(numero), 0) + 1 AS nuevo_turno FROM turnos WHERE caja_id = ?");
+        $stmt->execute([$caja_id]);
+        $nuevo_turno = $stmt->fetchColumn();
+
         // Inserta el turno asociando al cliente
-        $stmt = $conn->prepare("INSERT INTO turnos (numero, caja_id, estado, cliente_id) VALUES ((SELECT IFNULL(MAX(numero), 0) + 1 FROM turnos WHERE caja_id = ?), ?, 'espera', ?)");
-        $stmt->execute([$caja_id, $caja_id, $cliente_id]);
+        $stmt = $conn->prepare("INSERT INTO turnos (numero, caja_id, estado, cliente_id) VALUES (?, ?, 'espera', ?)");
+        $stmt->execute([$nuevo_turno, $caja_id, $cliente_id]);
 
         // Confirma la transacción
         $conn->commit();
 
-        echo "Turno solicitado correctamente. Su número de turno es " . $conn->lastInsertId();
+        echo "Turno solicitado correctamente. Su número de turno es " . $nuevo_turno;
     } catch (PDOException $e) {
         // Revierte la transacción en caso de error
         $conn->rollBack();
