@@ -26,3 +26,19 @@ CREATE TABLE clientes (
 ALTER TABLE turnos ADD COLUMN cliente_id INT;
 ALTER TABLE turnos ADD CONSTRAINT fk_cliente FOREIGN KEY (cliente_id) REFERENCES clientes(id);
 
+-- Eliminar la tabla de clientes si existe
+DROP TABLE IF EXISTS clientes;
+
+-- Crear la tabla de clientes con la cédula como clave primaria
+CREATE TABLE clientes (
+    cedula VARCHAR(20) PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    telefono VARCHAR(20) NOT NULL
+);
+
+-- Modificar la tabla de turnos para referenciar la tabla de clientes por cédula
+ALTER TABLE turnos DROP FOREIGN KEY fk_cliente;
+ALTER TABLE turnos DROP COLUMN cliente_id;
+ALTER TABLE turnos ADD COLUMN cliente_cedula VARCHAR(20);
+ALTER TABLE turnos ADD CONSTRAINT fk_cliente FOREIGN KEY (cliente_cedula) REFERENCES clientes(cedula);
+
