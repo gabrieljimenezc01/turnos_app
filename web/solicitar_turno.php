@@ -5,7 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cedula = $_POST['cedula'];
     $nombre = $_POST['nombre'];
     $telefono = $_POST['telefono'];
-    $caja_id = $_POST['caja_id'];
+    $servicio_id = $_POST['servicio_id'];
 
     try {
         // Verificar si el cliente ya existe
@@ -23,25 +23,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->execute([$cedula, $nombre, $telefono]);
         }
 
-        // Obtener el número de turno más alto para la caja especificada
-        $stmt = $conn->prepare("SELECT IFNULL(MAX(numero), 0) + 1 as nuevo_turno FROM turnos WHERE caja_id = ?");
-        $stmt->execute([$caja_id]);
+        // Obtener el prefijo del servicio
+        $stmt = $conn->prepare("SELECT nombre FROM servicios WHERE id = ?");
+        $stmt->execute([$servicio_id]);
+        $servicio = $stmt->fetch(PDO::FETCH_ASSOC)['nombre'];
+        $prefijo = strtoupper(substr($servicio, 0, 1));
+
+        // Obtener el número de turno más alto para el servicio especificado
+        $stmt = $conn->prepare("SELECT IFNULL(MAX(numero), 0) + 1 as nuevo_turno FROM turnos WHERE servicio_id = ?");
+        $stmt->execute([$servicio_id]);
         $nuevo_turno = $stmt->fetch(PDO::FETCH_ASSOC)['nuevo_turno'];
 
         // Insertar el nuevo turno en la tabla de turnos
-        $stmt = $conn->prepare("INSERT INTO turnos (numero, caja_id, estado, cliente_cedula) VALUES (?, ?, 'espera', ?)");
-        $stmt->execute([$nuevo_turno, $caja_id, $cedula]);
+        $stmt = $conn->prepare("INSERT INTO turnos (numero, servicio_id, estado, cliente_cedula) VALUES (?, ?, 'espera', ?)");
+        $stmt->execute([$nuevo_turno, $servicio_id, $cedula]);
 
-        echo "Turno solicitado correctamente. Su número de turno es " . $nuevo_turno;
+        echo "Turno solicitado correctamente. Su número de turno es " . $prefijo . $nuevo_turno;
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
 }
 
-// Obtener la lista de cajas desde la base de datos
+// Obtener la lista de servicios desde la base de datos
 try {
-    $stmt = $conn->query("SELECT id, nombre FROM cajas");
-    $cajas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $conn->query("SELECT id, nombre FROM servicios");
+    $servicios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
@@ -52,7 +58,6 @@ try {
 <head>
     <meta charset="UTF-8">
     <title>Solicitar Turno</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -78,6 +83,7 @@ try {
             });
         });
     </script>
+     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
     <h1>Solicitar Turno</h1>
@@ -91,11 +97,11 @@ try {
         <label for="telefono">Teléfono:</label>
         <input type="text" id="telefono" name="telefono" required><br>
 
-        <label for="caja_id">Caja:</label>
-        <select id="caja_id" name="caja_id" required>
+        <label for="servicio_id">Servicio:</label>
+        <select id="servicio_id" name="servicio_id" required>
             <?php
-            foreach ($cajas as $caja) {
-                echo "<option value='" . htmlspecialchars($caja['id']) . "'>" . htmlspecialchars($caja['nombre']) . "</option>";
+            foreach ($servicios as $servicio) {
+                echo "<option value='" . htmlspecialchars($servicio['id']) . "'>" . htmlspecialchars($servicio['nombre']) . "</option>";
             }
             ?>
         </select><br>

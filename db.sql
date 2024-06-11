@@ -42,3 +42,9 @@ ALTER TABLE turnos DROP COLUMN cliente_id;
 ALTER TABLE turnos ADD COLUMN cliente_cedula VARCHAR(20);
 ALTER TABLE turnos ADD CONSTRAINT fk_cliente FOREIGN KEY (cliente_cedula) REFERENCES clientes(cedula);
 
+CREATE TABLE servicios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL
+);
+
+INSERT INTO servicios (nombre) VALUES ('Caja'), ('Asesoría'), ('Otros Servicios');

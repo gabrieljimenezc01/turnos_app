@@ -6,24 +6,16 @@ require 'db.php';
 <head>
     <meta charset="UTF-8">
     <title>Mostrar Turnos</title>
-    
-    
-    <script>
-        // Script para actualizar la página cada 5 segundos
-        setInterval(function(){
-            window.location.reload();
-        }, 5000);
-    </script>
-     <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
     <h1>Turnos en Espera</h1>
     <?php
     try {
         // Consulta para obtener los turnos que están en estado "espera"
-        $stmt = $conn->query("SELECT c.nombre as caja, t.numero, cl.nombre as cliente, cl.telefono, cl.cedula 
+        $stmt = $conn->query("SELECT s.nombre as servicio, t.numero, cl.nombre as cliente, cl.telefono, cl.cedula 
                               FROM turnos t 
-                              JOIN cajas c ON t.caja_id = c.id 
+                              JOIN servicios s ON t.servicio_id = s.id 
                               JOIN clientes cl ON t.cliente_cedula = cl.cedula 
                               WHERE t.estado = 'espera' 
                               ORDER BY t.created_at ASC");
@@ -32,16 +24,17 @@ require 'db.php';
         if ($turnos) {
             echo "<table>
                     <tr>
-                      <th>Caja</th>
+                      <th>Servicio</th>
                       <th>Turno</th>
                       <th>Nombre</th>
                       <th>Teléfono</th>
                       <th>Cédula</th>
                     </tr>";
             foreach ($turnos as $turno) {
+                $prefijo = strtoupper(substr($turno['servicio'], 0, 1));
                 echo "<tr>
-                        <td>" . htmlspecialchars($turno['caja']) . "</td>
-                        <td>" . htmlspecialchars($turno['numero']) . "</td>
+                        <td>" . htmlspecialchars($turno['servicio']) . "</td>
+                        <td>" . htmlspecialchars($prefijo . $turno['numero']) . "</td>
                         <td>" . htmlspecialchars($turno['cliente']) . "</td>
                         <td>" . htmlspecialchars($turno['telefono']) . "</td>
                         <td>" . htmlspecialchars($turno['cedula']) . "</td>
