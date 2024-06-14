@@ -2,7 +2,8 @@
 require 'db.php';
 
 try {
-    $stmt = $conn->query("SELECT s.nombre as servicio, CONCAT(SUBSTRING(s.nombre, 1, 1), t.numero) as turno FROM turnos t JOIN servicios s ON t.servicio_id = s.id WHERE t.estado = 'espera' ORDER BY t.created_at ASC");
+    // Obtener turnos en espera
+    $stmt = $conn->query("SELECT s.nombre as servicio, CONCAT(UPPER(SUBSTRING(s.nombre, 1, 1)), t.numero) as turno FROM turnos t JOIN servicios s ON t.servicio_id = s.id WHERE t.estado = 'espera' ORDER BY t.created_at ASC");
     $turnos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     if ($turnos) {

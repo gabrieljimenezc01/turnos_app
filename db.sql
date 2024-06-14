@@ -47,4 +47,4 @@ CREATE TABLE servicios (
     nombre VARCHAR(255) NOT NULL
 );
 
-INSERT INTO servicios (nombre) VALUES ('Caja'), ('Asesoría'), ('Otros Servicios');
+INSERT INTO servicios (nombre) VALUES ('Caja'), ('Asesoria'), ('Otros Servicios');

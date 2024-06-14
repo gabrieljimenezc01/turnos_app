@@ -19,6 +19,12 @@ require 'db.php';
         th {
             background-color: #f2f2f2;
         }
+        .alert {
+            padding: 20px;
+            background-color: #f44336;
+            color: white;
+            margin-bottom: 15px;
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -43,14 +49,26 @@ require 'db.php';
             window.addEventListener('storage', function(event) {
                 if (event.key === 'turno_avanzado') {
                     actualizarTurnos();
+
+                    var data = JSON.parse(event.newValue);
+                    var servicio = data.servicio;
+                    var siguiente_turno = data.siguiente_turno;
+
+                    // Mostrar alerta con el siguiente turno
+                    $('#alerta_turno').html(
+                        `<div class="alert">
+                            <strong>Próximo turno:</strong> ${servicio} - ${siguiente_turno}
+                        </div>`
+                    );
                 }
             });
         });
     </script>
-      <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
     <h1>Turnos Atendidos</h1>
+    <div id="alerta_turno"></div>
     <div id="turnos"></div>
+    
 </body>
 </html>

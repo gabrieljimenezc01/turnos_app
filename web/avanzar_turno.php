@@ -27,9 +27,14 @@ try {
                     type: 'POST',
                     data: { servicio_id: servicio_id },
                     success: function(response) {
-                        alert(response);
+                        var data = JSON.parse(response);
+                        alert(data.message);
                         // Disparar el evento de almacenamiento local para notificar la actualización
-                        localStorage.setItem('turno_avanzado', new Date().getTime());
+                        localStorage.setItem('turno_avanzado', JSON.stringify({
+                            timestamp: new Date().getTime(),
+                            servicio: data.servicio,
+                            siguiente_turno: data.siguiente_turno
+                        }));
                     },
                     error: function(xhr, status, error) {
                         console.error(error);
@@ -38,7 +43,6 @@ try {
             });
         });
     </script>
-      <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
     <h1>Avanzar Turno</h1>
