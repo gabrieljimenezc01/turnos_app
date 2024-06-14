@@ -21,7 +21,7 @@ require 'db.php';
         }
         .alert {
             padding: 20px;
-            background-color: #f44336;
+            background-color: #006db2;
             color: white;
             margin-bottom: 15px;
         }
@@ -69,6 +69,5 @@ require 'db.php';
     <h1>Turnos Atendidos</h1>
     <div id="alerta_turno"></div>
     <div id="turnos"></div>
-    
 </body>
 </html>
