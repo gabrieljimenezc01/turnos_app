@@ -1,15 +1,21 @@
 <?php
+session_start();
 require 'db.php';
 
-// Obtener la lista de servicios desde la base de datos
-try {
-    $stmt = $conn->query("SELECT id, nombre FROM servicios");
-    $servicios = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
+if (!isset($_SESSION['userid'])) {
+    header("Location: login.php");
+    exit();
 }
-?>
 
+$servicio_id = $_SESSION['servicio_id'];
+
+// Obtener el nombre del servicio
+$stmt = $conn->prepare("SELECT nombre FROM servicios WHERE id = :servicio_id");
+$stmt->bindParam(':servicio_id', $servicio_id);
+$stmt->execute();
+$servicio = $stmt->fetch(PDO::FETCH_ASSOC);
+$servicio_nombre = $servicio['nombre'];
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -18,23 +24,14 @@ try {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#avanzar_form').on('submit', function(e) {
-                e.preventDefault();
-                var servicio_id = $('#servicio_id').val();
-                
+            $("#avanzarTurno").click(function() {
                 $.ajax({
-                    url: 'avanzar_turno_action.php',
+                    url: 'avanzar_turno_handler.php',
                     type: 'POST',
-                    data: { servicio_id: servicio_id },
+                    data: { servicio_id: <?= $servicio_id ?> },
                     success: function(response) {
-                        var data = JSON.parse(response);
-                        alert(data.message);
-                        // Disparar el evento de almacenamiento local para notificar la actualización
-                        localStorage.setItem('turno_avanzado', JSON.stringify({
-                            timestamp: new Date().getTime(),
-                            servicio: data.servicio,
-                            siguiente_turno: data.siguiente_turno
-                        }));
+                        alert(response);
+                        localStorage.setItem('turno_avanzado', response);
                     },
                     error: function(xhr, status, error) {
                         console.error(error);
@@ -45,18 +42,7 @@ try {
     </script>
 </head>
 <body>
-    <h1>Avanzar Turno</h1>
-    <form id="avanzar_form">
-        <label for="servicio_id">Servicio:</label>
-        <select id="servicio_id" name="servicio_id" required>
-            <?php
-            foreach ($servicios as $servicio) {
-                echo "<option value='" . htmlspecialchars($servicio['id']) . "'>" . htmlspecialchars($servicio['nombre']) . "</option>";
-            }
-            ?>
-        </select><br>
-
-        <button type="submit">Avanzar Turno</button>
-    </form>
+    <h1>Avanzar Turno - <?= htmlspecialchars($servicio_nombre) ?></h1>
+    <button id="avanzarTurno">Avanzar Turno</button>
 </body>
 </html>

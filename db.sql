@@ -47,4 +47,19 @@ CREATE TABLE servicios (
     nombre VARCHAR(255) NOT NULL
 );
 
-INSERT INTO servicios (nombre) VALUES ('Caja'), ('Asesoria'), ('Otros Servicios');
+INSERT INTO servicios (nombre) VALUES ('Deposito'), ('Retiro'), ('Servicios Publicos'), ('Asesoria'), ('Otros Servicios');
+
+CREATE TABLE IF NOT EXISTS usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    rol ENUM('cajero', 'asesor', 'otros') NOT NULL,
+    servicio_id INT,
+    FOREIGN KEY (servicio_id) REFERENCES servicios(id)
+);
+
+ALTER TABLE usuarios DROP COLUMN rol;
+
+INSERT INTO usuarios (username, password, servicio_id) VALUES 
+('cajero1', '$2y$10$eW5w7bJG8G9JQlU8I8xv1e.kFQXyo6oT9JbD5mK/xVPE8c5VOByCG', 1), -- Contraseña: password1
+('asesor1', '$2y$10$eW5w7bJG8G9JQlU8I8xv1e.kFQXyo6oT9JbD5mK/xVPE8c5VOByCG', 2); -- Contraseña: password1
