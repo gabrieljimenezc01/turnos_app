@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt = $conn->prepare("INSERT INTO turnos (numero, servicio_id, estado, cliente_cedula) VALUES (?, ?, 'espera', ?)");
         $stmt->execute([$nuevo_turno, $servicio_id, $cedula]);
 
-        echo "Turno solicitado correctamente. Su número de turno es " . $prefijo . $nuevo_turno;
+        $mensaje = "Turno solicitado correctamente. Su número de turno es " . $prefijo . $nuevo_turno;
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
@@ -108,5 +108,10 @@ try {
 
         <button type="submit">Solicitar Turno</button>
     </form>
+    <?php if ($mensaje): ?>
+    <div class="mensaje">
+        <?php echo htmlspecialchars($mensaje); ?>
+    </div>
+    <?php endif; ?>
 </body>
 </html>
