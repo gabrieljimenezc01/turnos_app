@@ -7,16 +7,18 @@ if (!isset($_SESSION['userid'])) {
     exit();
 };
 
-$servicio_id = $_SESSION['servicio_id'];
-$user = $_SESSION['userid'];
-echo $user;
-echo  $servicio_id;
-// Obtener el nombre del servicio
-$stmt = $conn->prepare("SELECT nombre FROM servicios WHERE id = :servicio_id");
-$stmt->bindParam(':servicio_id', $servicio_id);
-$stmt->execute();
-$servicio = $stmt->fetch(PDO::FETCH_ASSOC);
-$servicio_nombre = $servicio['nombre'];
+$servicio_id_session = $_SESSION['servicio_id'];
+echo $servicio_id_session." id del servicio de session";
+// Obtener la lista de servicios desde la base de datos
+try {
+    $stmt = $conn->prepare("SELECT nombre FROM servicios WHERE id = :iduser");
+    $stmt->bindParam(':iduser', $servicio_id_session);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
+}
+echo "nombre del servicio: ".$user['nombre'];
 ?>
 
 <!DOCTYPE html>
@@ -27,14 +29,23 @@ $servicio_nombre = $servicio['nombre'];
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            $("#avanzarTurno").click(function() {
+            $('#avanzar_form').on('submit', function(e) {
+                e.preventDefault();
+                var servicio_id = $('#servicio_id').val();
+                
                 $.ajax({
-                    url: 'avanzar_turno_handler.php',
+                    url: 'avanzar_turno_action.php',
                     type: 'POST',
-                    data: { servicio_id: <?= $servicio_id ?> },
+                    data: { servicio_id: servicio_id },
                     success: function(response) {
-                        alert(response);
-                        localStorage.setItem('turno_avanzado', response);
+                        var data = JSON.parse(response);
+                        alert(data.message);
+                        // Disparar el evento de almacenamiento local para notificar la actualización
+                        localStorage.setItem('turno_avanzado', JSON.stringify({
+                            timestamp: new Date().getTime(),
+                            servicio: data.servicio,
+                            siguiente_turno: data.siguiente_turno
+                        }));
                     },
                     error: function(xhr, status, error) {
                         console.error(error);
@@ -45,8 +56,17 @@ $servicio_nombre = $servicio['nombre'];
     </script>
 </head>
 <body>
-    <h1>Avanzar Turno - <?= htmlspecialchars($servicio_nombre) ?></h1>
-    <button id="avanzarTurno">Avanzar Turno</button>
+    <h1>Avanzar Turno</h1>
+    <form id="avanzar_form">
+        <label for="servicio_id">Servicio:</label>
+        <select id="servicio_id" name="servicio_id" required>
+            <?php
+                echo "<option value='" . htmlspecialchars($servicio_id_session) . "'>" . htmlspecialchars($user['nombre']) . "</option>";
+            
+            ?>
+        </select><br>
+
+        <button type="submit">Avanzar Turno</button>
+    </form>
 </body>
 </html>
-
