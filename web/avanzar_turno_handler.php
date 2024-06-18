@@ -7,7 +7,7 @@ if (!isset($_SESSION['userid'])) {
     exit();
 }
 
-$servicio_id = $_POST['servicio_id'];
+$servicio_id = $_SESSION['servicio_id'];
 
 try {
     $stmt = $conn->prepare("SELECT * FROM turnos WHERE servicio_id = :servicio_id AND estado = 'espera' ORDER BY created_at ASC LIMIT 1");

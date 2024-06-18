@@ -5,10 +5,12 @@ require 'db.php';
 if (!isset($_SESSION['userid'])) {
     header("Location: login.php");
     exit();
-}
+};
 
 $servicio_id = $_SESSION['servicio_id'];
-
+$user = $_SESSION['userid'];
+echo $user;
+echo  $servicio_id;
 // Obtener el nombre del servicio
 $stmt = $conn->prepare("SELECT nombre FROM servicios WHERE id = :servicio_id");
 $stmt->bindParam(':servicio_id', $servicio_id);
@@ -16,6 +18,7 @@ $stmt->execute();
 $servicio = $stmt->fetch(PDO::FETCH_ASSOC);
 $servicio_nombre = $servicio['nombre'];
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -46,3 +49,4 @@ $servicio_nombre = $servicio['nombre'];
     <button id="avanzarTurno">Avanzar Turno</button>
 </body>
 </html>
+

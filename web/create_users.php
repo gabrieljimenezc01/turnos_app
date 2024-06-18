@@ -6,9 +6,9 @@ $key = 'this_is_a_very_secure_key'; // Use the same secret key for encryption an
 
 // Datos de los usuarios a crear
 $users = [
-    ['username' => 'cajero1', 'password' => 'password1', 'servicio' => 'cajero'],
-    ['username' => 'cajero', 'password' => '123', 'servicio' => 'cajero'],
-    ['username' => 'asesor1', 'password' => 'password1', 'servicio' => 'asesor']
+    ['username' => 'cajero1', 'password' => 'password1', 'servicio' => '40'],
+    ['username' => 'cajero', 'password' => '123', 'servicio' => '40'],
+    ['username' => 'asesor1', 'password' => 'password1', 'servicio' => '41']
 ];
 
 try {
