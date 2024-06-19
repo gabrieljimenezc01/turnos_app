@@ -57,61 +57,54 @@ try {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Solicitar Turno</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#cedula').on('blur', function() {
-                var cedula = $(this).val();
-                if (cedula) {
-                    $.ajax({
-                        url: 'obtener_cliente.php',
-                        type: 'POST',
-                        data: { cedula: cedula },
-                        success: function(data) {
-                            var cliente = JSON.parse(data);
-                            if (cliente) {
-                                $('#nombre').val(cliente.nombre);
-                                $('#telefono').val(cliente.telefono);
-                            } else {
-                                $('#nombre').val('');
-                                $('#telefono').val('');
-                            }
-                        }
-                    });
-                }
-            });
-        });
-    </script>
-     <link rel="stylesheet" type="text/css" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitar Turno - Banco Camilo</title>
+    <link rel="stylesheet" href="estilosolicitarturno.css">
 </head>
 <body>
-    <h1>Solicitar Turno</h1>
-    <form method="POST" action="solicitar_turno.php">
-        <label for="cedula">Cédula:</label>
-        <input type="text" id="cedula" name="cedula" required><br>
-
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" required><br>
-
-        <label for="telefono">Teléfono:</label>
-        <input type="text" id="telefono" name="telefono" required><br>
-
-        <label for="servicio_id">Servicio:</label>
-        <select id="servicio_id" name="servicio_id" required>
-            <?php
-            foreach ($servicios as $servicio) {
-                echo "<option value='" . htmlspecialchars($servicio['id']) . "'>" . htmlspecialchars($servicio['nombre']) . "</option>";
-            }
-            ?>
-        </select><br>
-
-        <button type="submit">Solicitar Turno</button>
-    </form>
-    <?php if ($mensaje): ?>
-    <div class="mensaje">
-        <?php echo htmlspecialchars($mensaje); ?>
+    <div class="container">
+        <div class="left-column">
+            <div class="bienvenida">
+                <h2>Bienvenidos a G&C Bank</h2>
+                <p>Para solicitar su turno complete el siguiente formulario:</p>
+            </div>
+            <div class="imagen-banco">
+                <img src="imagenes\sol2.jpeg" alt="Banco Camilo">
+            </div>
+        </div>
+        <div class="right-column">
+            <h1>Solicitar Turno</h1>
+            <form method="POST" action="solicitar_turno.php">
+                <div class="form-group">
+                    <label for="cedula">Cédula:</label>
+                    <input type="text" id="cedula" name="cedula" required>
+                </div>
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" id="telefono" name="telefono" required>
+                </div>
+                <div class="form-group">
+                    <label for="servicio_id">Servicio:</label>
+                    <select id="servicio_id" name="servicio_id" required>
+                        <?php foreach ($servicios as $servicio): ?>
+                            <option value="<?= htmlspecialchars($servicio['id']) ?>"><?= htmlspecialchars($servicio['nombre']) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <button type="submit">Solicitar Turno</button>
+            </form>
+            <?php if ($mensaje): ?>
+                <div class="mensaje">
+                    <?php echo htmlspecialchars($mensaje); ?>
+                </div>
+            <?php endif; ?>
+        </div>
     </div>
-    <?php endif; ?>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="scripts.js"></script>
 </body>
 </html>
