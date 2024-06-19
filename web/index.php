@@ -39,7 +39,8 @@
     <div class="redes-sociales">
       <a href="https://facebook.com/GC_Bank" target="_blank">Facebook</a>
       <a href="https://twitter.com/GC_Bank" target="_blank">Twitter</a>
-      <a href="https://instagram.com/GC_Bank" target="_blank">Instagram</a>
+      <a href="https://instagram.com/GC_Bank" target="_blank">Instagram</a> <br>
+      <a href="">by: Gabriel Jimenez & Camilo Cuatapi</a>
     </div>
   </footer>
 </body>

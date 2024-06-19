@@ -22,8 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     } else {
         echo "Usuario o contraseña incorrectos.";
-        $k= decrypt($user['password'], $key);
-        echo $k." contraseña ".$password." lim";
+        
     }
 }
 ?>
