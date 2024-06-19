@@ -20,13 +20,13 @@
       </li>
       <li>
         <a href="avanzar_turno.php">
-          <img src="imagenes\avance.jpeg" alt="Avanzar Turno">
+          <img src="imagenes\avance.png" alt="Avanzar Turno">
           <span>Avanzar Turno</span>
         </a>
       </li>
       <li>
         <a href="mostrar_turno.php">
-          <img src="imagenes\mos.jpeg" alt="Mostrar Turno">
+          <img src="imagenes\mos.png" alt="Mostrar Turno">
           <span>Mostrar  Turno</span>
         </a>
       </li>

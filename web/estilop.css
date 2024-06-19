@@ -47,7 +47,7 @@ nav ul {
 nav ul li {
   display: inline-block;
   margin: 10px;
-  border: solid 1px;
+  border: solid 4px;
   border-color: #ffffff33;
   border-radius: 5px;
 }
