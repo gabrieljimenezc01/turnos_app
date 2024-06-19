@@ -83,6 +83,7 @@ try {
                     });
                 }
             });
+            
         });
     </script>
 </head>
@@ -99,7 +100,7 @@ try {
         </div>
         <div class="right-column">
             <h1>Solicitar Turno</h1>
-            <form method="POST" action="solicitar_turno.php">
+            <form method="POST" action="solicitar_turno.php" id="avanzar_form">
                 <div class="form-group">
                     <label for="cedula">Cédula:</label>
                     <input type="text" id="cedula" name="cedula" required>

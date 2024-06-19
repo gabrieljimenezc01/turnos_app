@@ -6,26 +6,7 @@ require 'db.php';
 <head>
     <meta charset="UTF-8">
     <title>Mostrar Turnos</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .alert {
-            padding: 20px;
-            background-color: #006db2;
-            color: white;
-            margin-bottom: 15px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function actualizarTurnos() {
