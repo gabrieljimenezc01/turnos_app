@@ -88,6 +88,9 @@ try {
     </script>
 </head>
 <body>
+<header>
+    <img src="imagenes\logo.jpeg" alt="Logo de G&C Bank" class="logo">
+  </header>
     <div class="container">
         <div class="left-column">
             <div class="bienvenida">

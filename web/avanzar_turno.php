@@ -8,7 +8,7 @@ if (!isset($_SESSION['userid'])) {
 };
 
 $servicio_id_session = $_SESSION['servicio_id'];
-echo $servicio_id_session." id del servicio de session";
+
 // Obtener la lista de servicios desde la base de datos
 try {
     $stmt = $conn->prepare("SELECT nombre FROM servicios WHERE id = :iduser");
@@ -18,7 +18,7 @@ try {
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
-echo "nombre del servicio: ".$user['nombre'];
+
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +26,7 @@ echo "nombre del servicio: ".$user['nombre'];
 <head>
     <meta charset="UTF-8">
     <title>Avanzar Turno</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="general.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -57,7 +57,11 @@ echo "nombre del servicio: ".$user['nombre'];
     </script>
 </head>
 <body>
-    <h1>Avanzar Turno</h1>
+<header>
+    <img src="imagenes\logo.jpeg" alt="Logo de G&C Bank" class="logo">
+    <h1>G&C Bank</h1>
+  </header>
+    <h1>Avanzar Turno Tu rol es <?php echo $user['nombre'] ?> </h1>
     <form id="avanzar_form">
         <label for="servicio_id">Servicio:</label>
         <select id="servicio_id" name="servicio_id" required>

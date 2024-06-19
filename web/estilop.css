@@ -5,6 +5,8 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background: linear-gradient(#144f77 30%,#6c85c8 , white);
+  align-items: center;
 }
 
 header {
@@ -15,8 +17,9 @@ header {
 }
 
 header .logo {
-  width: 200px;
-  height: 200px;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%; 
 }
 
 header h1 {
@@ -25,8 +28,12 @@ header h1 {
 }
 
 nav {
-  background-color: #ffffff;
+  background-color: #ffffff2e;
   overflow: hidden;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 nav ul {
@@ -40,13 +47,16 @@ nav ul {
 nav ul li {
   display: inline-block;
   margin: 10px;
+  border: solid 1px;
+  border-color: #ffffff33;
+  border-radius: 5px;
 }
 
 nav ul li a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: black;
+  color: white;
   text-align: center;
   padding: 10px;
   text-decoration: none;
@@ -55,20 +65,20 @@ nav ul li a {
 
 nav ul li a img {
   width: 100px;
-  height: 100px;
+  height: 105px;
 }
 
 nav ul li a span {
-  margin-top: 5px;
+  margin-top: 10px;
 }
 
 nav ul li a:hover {
   background-color: #75abe9;
-  color: black;
+  color: beige;
 }
 
 footer {
-  background-color: #696464;
+  border-top: #b5b0b0 2px solid;
   padding: 20px;
   text-align: center;
   margin-top: auto;
@@ -76,16 +86,18 @@ footer {
 
 footer h2 {
   margin-top: 0;
+  color: #222222;
 }
 
 footer p {
   margin: 5px 0;
+  color: #222222;
 }
 
 footer .redes-sociales a {
   margin: 5px;
   text-decoration: none;
-  color: #000000;
+  color: #222222;
 }
 
 footer .redes-sociales a:hover {

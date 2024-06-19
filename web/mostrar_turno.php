@@ -6,7 +6,6 @@ require 'db.php';
 <head>
     <meta charset="UTF-8">
     <title>Mostrar Turnos</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function actualizarTurnos() {
@@ -45,9 +44,14 @@ require 'db.php';
             });
         });
     </script>
+    <link rel="stylesheet" type="text/css" href="general.css">
 </head>
 <body>
-    <h1>Turnos Atendidos</h1>
+<header>
+    <img src="imagenes\logo.jpeg" alt="Logo de G&C Bank" class="logo">
+    <h1>G&C Bank</h1>
+  </header>
+    <h1>Turnos en espera</h1>
     <div id="alerta_turno"></div>
     <div id="turnos"></div>
 </body>
