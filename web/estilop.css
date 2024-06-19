@@ -1,0 +1,93 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  background-color: #144f77;
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+}
+
+header .logo {
+  width: 200px;
+  height: 200px;
+}
+
+header h1 {
+  font-size: 24px;
+  margin: 10px 0 0 0;
+}
+
+nav {
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+nav ul li {
+  display: inline-block;
+  margin: 10px;
+}
+
+nav ul li a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: black;
+  text-align: center;
+  padding: 10px;
+  text-decoration: none;
+  width: 100px;
+}
+
+nav ul li a img {
+  width: 100px;
+  height: 100px;
+}
+
+nav ul li a span {
+  margin-top: 5px;
+}
+
+nav ul li a:hover {
+  background-color: #75abe9;
+  color: black;
+}
+
+footer {
+  background-color: #696464;
+  padding: 20px;
+  text-align: center;
+  margin-top: auto;
+}
+
+footer h2 {
+  margin-top: 0;
+}
+
+footer p {
+  margin: 5px 0;
+}
+
+footer .redes-sociales a {
+  margin: 5px;
+  text-decoration: none;
+  color: #000000;
+}
+
+footer .redes-sociales a:hover {
+  color: #144f77;
+}
