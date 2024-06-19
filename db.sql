@@ -60,6 +60,3 @@ CREATE TABLE IF NOT EXISTS usuarios (
 
 ALTER TABLE usuarios DROP COLUMN rol;
 
-INSERT INTO usuarios (username, password, servicio_id) VALUES 
-('cajero1', '$2y$10$eW5w7bJG8G9JQlU8I8xv1e.kFQXyo6oT9JbD5mK/xVPE8c5VOByCG', 1), -- Contraseña: password1
-('asesor1', '$2y$10$eW5w7bJG8G9JQlU8I8xv1e.kFQXyo6oT9JbD5mK/xVPE8c5VOByCG', 2); -- Contraseña: password1

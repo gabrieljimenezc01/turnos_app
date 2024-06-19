@@ -60,6 +60,31 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solicitar Turno - Banco Camilo</title>
     <link rel="stylesheet" href="estilosolicitarturno.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#cedula').on('blur', function() {
+                var cedula = $(this).val();
+                if (cedula) {
+                    $.ajax({
+                        url: 'obtener_cliente.php',
+                        type: 'POST',
+                        data: { cedula: cedula },
+                        success: function(data) {
+                            var cliente = JSON.parse(data);
+                            if (cliente) {
+                                $('#nombre').val(cliente.nombre);
+                                $('#telefono').val(cliente.telefono);
+                            } else {
+                                $('#nombre').val('');
+                                $('#telefono').val('');
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 </head>
 <body>
     <div class="container">
