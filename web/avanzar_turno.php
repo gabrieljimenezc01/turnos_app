@@ -53,6 +53,9 @@ try {
                     }
                 });
             });
+            $('#logoutBtn').click(function(){
+                window.location.href = 'logout.php';
+            });
         });
     </script>
 </head>
@@ -73,5 +76,6 @@ try {
 
         <button type="submit">Avanzar Turno</button>
     </form>
+    <button id="logoutBtn">Cerrar Sesión</button>
 </body>
 </html>
